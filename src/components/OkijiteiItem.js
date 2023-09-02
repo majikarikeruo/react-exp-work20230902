@@ -2,9 +2,9 @@ const OkijiteiItem = ({
   item,
   index,
   length,
-  handleAdd,
+  handleAddButton,
   handleInputChange,
-  handleRemove,
+  handleRemoveButton,
 }) => {
   return (
     <div className="flex mb-2 text-center items-center">
@@ -17,15 +17,17 @@ const OkijiteiItem = ({
       />
       <div className="flex items-center">
         <button
-          onClick={handleAdd}
+          onClick={handleAddButton}
+          aria-label="アイテムを追加"
           className="w-10 h-10 text-center px-0 py-2 border-solid border-gray-300 border font-semibold text-sm bg-blue-500 text-white rounded-none shadow-sm"
         >
           ＋
         </button>
         {length > 1 && (
           <button
+            onClick={() => handleRemoveButton(index)}
+            aria-label="アイテムを削除"
             className="w-10 h-10 text-center mx-3 border-solid border-gray-300 border p-2"
-            onClick={() => handleRemove(index)}
           >
             −
           </button>

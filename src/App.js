@@ -6,7 +6,6 @@ import Output from "./components/Output";
 import Button from "./components/Button";
 import Heading from "./components/Heading";
 import Text from "./components/Text";
-
 import OkijiteiItem from "./components/OkijiteiItem";
 
 function App() {
@@ -14,25 +13,36 @@ function App() {
   const [output, setOutput] = useState("");
   const [toastMessage, setToastMessage] = useState(null);
 
-  const showToast = (message) => {
-    setToastMessage(message);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  const handleAdd = () => {
+  /******************************
+   * @function handleAddButton
+   * @description　＋ボタンを押したときの処理
+   ******************************/
+  const handleAddButton = () => {
     setLists((prevLists) => [...prevLists, ""]);
   };
 
-  const handleRemove = (index) => {
+  /******************************
+   * @function handleRemoveButton
+   * @description　−ボタンを押したときの処理
+   ******************************/
+  const handleRemoveButton = (index) => {
     setLists((prevLists) => prevLists.filter((_, idx) => idx !== index));
   };
 
+  /******************************
+   * @function handleInputChange
+   * @description　inputの値を変更したときの処理
+   ******************************/
   const handleInputChange = (index, value) => {
     const updatedLists = [...lists];
     updatedLists[index] = value;
     setLists(updatedLists);
   };
 
+  /******************************
+   * @function handleOutput
+   * @description　出力ボタンを押したときの処理
+   ******************************/
   const handleOutput = () => {
     const firstChars = lists.map((item) => (item[0] ? item[0] : ""));
     const concatenatedInputs = firstChars.join("");
@@ -40,6 +50,10 @@ function App() {
     setOutput(result);
   };
 
+  /******************************
+   * @function copyOutput
+   * @description　出力結果をコピーする
+   ******************************/
   const copyOutput = () => {
     navigator.clipboard
       .writeText(output)
@@ -51,10 +65,20 @@ function App() {
       });
   };
 
+  /******************************
+   * @function showToast
+   * @description　トーストメッセージを表示する
+   ******************************/
+  const showToast = (message) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
   return (
     <div className="mx-auto w-80 py-10">
       <Heading text={"起ジ定ジェネレーター"} />
       <Text text={"キメるときの宣言に使おう！"} />
+
       <div className="p-6 border-solid border-gray-200 border">
         <div className="mb-2">起きたら...</div>
 
@@ -63,14 +87,15 @@ function App() {
             index={index}
             item={item}
             length={lists.length}
-            handleAdd={handleAdd}
+            handleAddButton={handleAddButton}
             handleInputChange={handleInputChange}
-            handleRemove={handleRemove}
+            handleRemoveButton={handleRemoveButton}
           />
         ))}
 
         <div className="mt-2">定期</div>
       </div>
+
       <div className="text-center mt-10">
         <Button text={"結果を出力"} handleClick={handleOutput} />
       </div>
